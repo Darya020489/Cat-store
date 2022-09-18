@@ -1,0 +1,20 @@
+.sort-block {
+  padding: 10px 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 2px solid var(--dark-grey);
+
+  & .sort-title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  & .sort-btn {
+    font-size: 16px;
+    border: none;
+    color: var(--dark-grey);
+    background-color: transparent;
+  }
+}

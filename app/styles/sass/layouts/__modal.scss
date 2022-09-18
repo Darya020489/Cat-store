@@ -1,0 +1,32 @@
+.modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  &__inner {
+    padding: 30px;
+    width: 50%;
+    background-color: var(--grey);
+    border: 1px solid var(--black);
+  }
+
+  &__img {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--black);
+  }
+
+  &__title {
+    text-align: center;
+    padding-bottom: 20px;
+    font-size: 20px;
+    color: var(--violet);
+    border-bottom: 1px solid var(--black);
+  }
+}

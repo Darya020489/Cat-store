@@ -1,0 +1,61 @@
+:root {
+  --white: white;
+  --accent: #ec7979;
+  --blue: #0b339e;
+  --light-blue: rgba(208, 225, 243, 0.7);
+  --primary: #000000;
+  --bordo: rgb(157, 73, 73);
+  --black: rgb(0, 0, 0);
+  --grey: #86878b;
+  --dark-grey: #464648;
+  --grey: #c6cbcd;
+  --yellow: rgb(226, 216, 75);
+  --purple: rgb(180, 8, 186);
+  --pink: rgb(234, 150, 236);
+  --dark-pink: rgb(224, 113, 226);
+  --violet: rgb(73, 3, 74);
+  --violet-opas: rgba(73, 3, 74, 0.7);
+  --light-violet: rgb(121, 9, 106);
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  scroll-behavior: smooth;
+}
+
+// #app {
+//   scroll-behavior: smooth;
+//   width: 100vw;
+//   height: 100vh;
+// }
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+}
+
+#app.dark {
+  background-color: var(--light-violet);
+
+  & .prime-btn {
+    color: var(--white);
+    background-color: var(--violet);
+    border: 1px solid var(--white);
+
+    &:hover {
+      background-color: var(--violet-opas);
+    }
+  }
+
+  & .sort-title,
+  & .sort-btn,
+  & .label-character {
+    color: rgb(199, 198, 197);
+  }
+}

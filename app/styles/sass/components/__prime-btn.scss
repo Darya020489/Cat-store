@@ -1,0 +1,14 @@
+.prime-btn {
+  transition: all 0.5s ease;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  border: 1px solid var(--dark-grey);
+  background-color: var(--pink);
+  box-shadow: 7px 7px 8px 0px rgba(34, 60, 80, 0.23);
+
+  &:hover {
+    background-color: var(--dark-pink);
+  }
+}
