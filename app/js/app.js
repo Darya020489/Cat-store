@@ -1,14 +1,22 @@
 // // Import vendor jQuery plugin example
 // import '~/app/libs/mmenu/dist/mmenu.js'
-
 import { createEl } from "./create_elements.js";
+
+// import Splide from '@splidejs/splide';
+// new Splide( '.splide' ).mount();
+
+
+
+
 
 const API = "https://6320001b9f82827dcf22a81e.mockapi.io/api/animals";
 const logoImgSrc =
   "https://s.rbk.ru/v1_companies_s3/resized/1200xH/media/trademarks/5572fccc-e9a9-4cbb-bdc7-86331753cf1b.jpg";
 const backetImgSrc =
   "https://st.depositphotos.com/1005920/1632/i/950/depositphotos_16327703-stock-photo-shopping-cart-violet-glossy-icon.jpg";
-
+const slide1 = "https://mobimg.b-cdn.net/v3/fetch/2c/2c38ec7c72e3d0094f591d6f735a3b8e.jpeg?w=1000&r=0.5625";
+const slide2 = "https://s1.1zoom.ru/big3/690/412727-sepik.jpg";
+const slide3 = "https://mobimg.b-cdn.net/v3/fetch/bd/bdebde7d0903905d0f7b4931b534cad3.jpeg";
 const body = document.querySelector("body");
 const app = document.querySelector("#app");
 const header = createEl("header", "header");
@@ -23,6 +31,31 @@ const themeBtn = createEl("button", "prime-btn theme-btn", "Change theme");
 header.append(reloadBtn, searchInput, basketBtn, themeBtn);
 app.append(header);
 
+//создание разметки слайдера####################################################################
+const splide = createEl('div', 'splide');
+splide.role = 'group';
+splide.ariaLabel = 'Example';
+const splideTrack = createEl('div', 'splide__track');
+const splideList = createEl('ul', 'splide__list');
+const splideSlide1 = createEl('li', 'splide__slide');
+const splideSlideImg1 = createEl('img', 'splide__slide-img');
+// splideSlideImg1.src = slide1;
+splideSlide1.append(splideSlideImg1);
+const splideSlide2 = createEl('li', 'splide__slide');
+const splideSlideImg2 = createEl('img', 'splide__slide-img');
+// splideSlideImg2.src = slide2;
+splideSlide2.append(splideSlideImg2);
+const splideSlide3 = createEl('li', 'splide__slide');
+const splideSlideImg3 = createEl('img', 'splide__slide-img');
+// splideSlideImg3.src = slide3;
+splideSlide3.append(splideSlideImg3);
+splideList.append(splideSlide1, splideSlide2, splideSlide3);
+splideTrack.append(splideList);
+splide.append(splideTrack);
+app.append(splide);
+
+
+//создание разметки сортировки####################################################################
 const sortContainer = createEl("div", "sort-block");
 const sortTitle = createEl("h2", "sort-title", "Sort:");
 const sortDefault = createEl("button", "sort-btn sort-default", "By default");
@@ -37,14 +70,23 @@ const cardsContainer = createEl("div", "cards-container");
 app.append(sortContainer, cardsContainer);
 
 let catsList = [];
-let basketArr = [];
+let basketArr = JSON.parse(localStorage.getItem('basket')) ?? [];
 
 document.addEventListener("DOMContentLoaded", () => {
   catsList = getDataApi();
   createBasket();
   createModal();
+  createAddInfo();
   app.classList.add(localStorage.getItem("theme"));
+  if(basketArr.length >= 1){
+    fillBasket();
+  }
 });
+
+
+
+
+
 
 //установка темы####################################################################
 themeBtn.addEventListener("click", () => {
@@ -125,12 +167,26 @@ function createBasket() {
 //создание модалки################################################################
 function createModal() {
   let modal = createEl("div", "modal");
-  app.append(modal);
   let modalInner = createEl("div", "modal__inner");
   let modalImg = createEl("img", "modal__img");
   let modalTitle = createEl("p", "modal__title");
   modalInner.append(modalImg, modalTitle);
   modal.append(modalInner);
+  app.append(modal);
+}
+
+function createAddInfo() {
+  let infoWindow = createEl("div", "info");
+  // let infoWindow = createEl("div", "info__window");
+  let infoText = createEl(
+    "p",
+    "info__text",
+    "The product has been added to the cart"
+  );
+  infoWindow.append(infoText);
+  // infoWindow.append(infoText);
+  app.append(infoWindow);
+  // app.append(info);
 }
 
 //клик сортировки########################################################################################
@@ -188,7 +244,9 @@ cardsContainer.addEventListener("click", ({ target }) => {
       (el) => target.closest(".card").id === el.id
     );
     basketArr.push(catToBasket);
+    localStorage.setItem('basket', JSON.stringify(basketArr));
     fillBasket();
+    displayInfoWindow();
   }
 });
 
@@ -215,13 +273,21 @@ function fillBasket() {
 
 //рассчет результата корзины################################################################
 function calcBasketRezult() {
-  if(basketArr.length === 0){
+  if (basketArr.length === 0) {
     return "Your shopping cart is empty";
-  }else{
+  } else {
     let basketRez = basketArr.reduce((sum, el) => (sum += +el.price), 0);
-  return `Total: ${basketRez.toFixed(2)}`;
+    return `Total: ${basketRez.toFixed(2)}`;
   }
-  
+}
+
+//показ окна о довавлении в корзину################################################################
+function displayInfoWindow() {
+  let infoWindow = document.querySelector(".info");
+  infoWindow.style.display = "flex";
+  setTimeout(() => {
+    infoWindow.style.display = "none";
+  }, 2000);
 }
 
 //открытие корзины################################################################
@@ -229,28 +295,18 @@ basketBtn.addEventListener("click", () => {
   let basket = document.querySelector(".basket");
   basket.style.display = "flex";
   body.style.overflow = "hidden";
-    //удаление из корзины################################################################
-// let basket = document.querySelector('.basket');
-// console.log(basket);
-//???????????????????????????????????????????????????????
-let basketList = document.querySelector('.basket__list');
-basketList.addEventListener('click', ({target}) => {
-if(target.classList.contains('basket__del-btn')){
-  let elementId = target.closest('.basket__el').id;
-
-  let deleteIndex = basketArr.findIndex((cat) => cat.id === elementId);
-  basketArr.splice(deleteIndex, 1);
-  console.log(basketArr);
-  fillBasket();
-
-}
-});
-  //закрытие корзины################################################################
+  //удаление из корзины################################################################
   basket.addEventListener("click", ({ target }) => {
-    console.log(target.closest(".basket__inner"));
-    //????????????????????????????????????????????????????????
-    if (!target.closest(".basket__inner") && !target.classList.contains('.basket__del-btn')) {
-      // console.log(target.closest(".basket__inner"));
+    if (target.classList.contains("basket__del-btn")) {
+      let elementId = target.closest(".basket__el").id;
+      let deleteIndex = basketArr.findIndex((cat) => cat.id === elementId);
+      basketArr.splice(deleteIndex, 1);
+      console.log(basketArr);
+      localStorage.setItem('basket', JSON.stringify(basketArr));
+      fillBasket();
+    }
+    //закрытие корзины################################################################
+    else if (!target.closest(".basket__inner")) {
       basket.style.display = "none";
       body.style.overflow = "";
     }
@@ -262,7 +318,7 @@ cardsContainer.addEventListener("click", ({ target }) => {
   if (target.closest(".card") && !target.classList.contains("card__btn")) {
     let card = target.closest(".card");
     let catCard = catsList.find((el) => el.id === card.id);
-    openModal(catCard);
+    renderModal(catCard);
     body.style.overflow = "hidden";
   }
   //закрытие модалки################################################################
@@ -275,7 +331,7 @@ cardsContainer.addEventListener("click", ({ target }) => {
   });
 });
 
-function openModal(cat) {
+function renderModal(cat) {
   let modal = document.querySelector(".modal");
   modal.style.display = "flex";
   let modalImg = document.querySelector(".modal__img");
