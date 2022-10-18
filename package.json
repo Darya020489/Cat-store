@@ -43,6 +43,6 @@
 		"webpack-stream": "^7.0.0"
 	},
 	"dependencies": {
-		"@splidejs/splide": "^4.1.2"
+		"@splidejs/splide": "^4.1.3"
 	}
 }

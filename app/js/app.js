@@ -2,12 +2,8 @@
 // import '~/app/libs/mmenu/dist/mmenu.js'
 import { createEl } from "./create_elements.js";
 
-// import Splide from '@splidejs/splide';
+// import Splide from "@splidejs/splide";
 // new Splide( '.splide' ).mount();
-
-
-
-
 
 const API = "https://6320001b9f82827dcf22a81e.mockapi.io/api/animals";
 const logoImgSrc =
@@ -32,28 +28,27 @@ header.append(reloadBtn, searchInput, basketBtn, themeBtn);
 app.append(header);
 
 //создание разметки слайдера####################################################################
-const splide = createEl('div', 'splide');
-splide.role = 'group';
-splide.ariaLabel = 'Example';
-const splideTrack = createEl('div', 'splide__track');
-const splideList = createEl('ul', 'splide__list');
-const splideSlide1 = createEl('li', 'splide__slide');
-const splideSlideImg1 = createEl('img', 'splide__slide-img');
+// const splide = createEl('div', 'splide');
+// splide.role = 'group';
+// splide.ariaLabel = 'Example';
+// const splideTrack = createEl('div', 'splide__track');
+// const splideList = createEl('ul', 'splide__list');
+// const splideSlide1 = createEl('li', 'splide__slide');
+// const splideSlideImg1 = createEl('img', 'splide__slide-img');
 // splideSlideImg1.src = slide1;
-splideSlide1.append(splideSlideImg1);
-const splideSlide2 = createEl('li', 'splide__slide');
-const splideSlideImg2 = createEl('img', 'splide__slide-img');
+// splideSlide1.append(splideSlideImg1);
+// const splideSlide2 = createEl('li', 'splide__slide');
+// const splideSlideImg2 = createEl('img', 'splide__slide-img');
 // splideSlideImg2.src = slide2;
-splideSlide2.append(splideSlideImg2);
-const splideSlide3 = createEl('li', 'splide__slide');
-const splideSlideImg3 = createEl('img', 'splide__slide-img');
+// splideSlide2.append(splideSlideImg2);
+// const splideSlide3 = createEl('li', 'splide__slide');
+// const splideSlideImg3 = createEl('img', 'splide__slide-img');
 // splideSlideImg3.src = slide3;
-splideSlide3.append(splideSlideImg3);
-splideList.append(splideSlide1, splideSlide2, splideSlide3);
-splideTrack.append(splideList);
-splide.append(splideTrack);
-app.append(splide);
-
+// splideSlide3.append(splideSlideImg3);
+// splideList.append(splideSlide1, splideSlide2, splideSlide3);
+// splideTrack.append(splideList);
+// splide.append(splideTrack);
+// app.append(splide);
 
 //создание разметки сортировки####################################################################
 const sortContainer = createEl("div", "sort-block");
@@ -82,11 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fillBasket();
   }
 });
-
-
-
-
-
 
 //установка темы####################################################################
 themeBtn.addEventListener("click", () => {
